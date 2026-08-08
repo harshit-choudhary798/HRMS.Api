@@ -12,9 +12,10 @@ namespace HRMS.Api.Services
             _repository = repository;
         }
 
-        public List<Employee> GetEmployees()
+        public async Task<List<Employee>> GetEmployees()
         {
-            return _repository.GetEmployees();
+            return await _repository.GetEmployees();
+
         }
         public bool PostEmployees(Employee emp)
         {

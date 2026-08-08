@@ -16,21 +16,34 @@ namespace HRMS.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetEmployees()
+        public async Task<IActionResult> GetEmployees()
         {
-            return Ok(_service.GetEmployees());
+            var employees = await _service.GetEmployees();
+                return NotFound();
         }
-        [HttpPost]
-        public IActionResult PostEmployees(Employee emp)
-        {
-            return Ok(_service.PostEmployees(emp));
-        }
-        [HttpGet("{id}")]
-        public ActionResult<Employee> GetEmployeeById(int id)
-        {
-            var employee = _service.GetEmployeeById(id);
+            [HttpPost]
+            public IActionResult PostEmployees(Employee emp)
+            {
+                return Ok(_service.PostEmployees(emp));
+            }
+            [HttpGet("{id}")]
+            public ActionResult<Employee> GetEmployeeById(int id)
+            {
+                var employee = _service.GetEmployeeById(id);
 
-            if (employee == null)
+                if (employee == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(employee);
+            } }
+        [HttpPut("{id}")]
+        public ActionResult<Employee> updateEmployeesData(Employee employee)
+        {
+            var employeeStatus = _service.updateEmployeesData(employee);
+
+            if (employeeStatus == false)
             {
                 return NotFound();
             }

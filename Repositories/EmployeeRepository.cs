@@ -1,6 +1,7 @@
 ﻿using HRMS.Api.Data;
 using HRMS.Api.Interfaces;
 using HRMS.Api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HRMS.Api.Repositories
 {
@@ -13,9 +14,9 @@ namespace HRMS.Api.Repositories
             _context = context;
         }
 
-        public List<Employee> GetEmployees()
+        public async Task<List<Employee>> GetEmployees()
         {
-            return _context.Employees.ToList();
+            return await _context.Employees.ToListAsync();
         }
         public bool PostEmployees(Employee emp)
         {
