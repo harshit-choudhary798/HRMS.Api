@@ -18,21 +18,25 @@ namespace HRMS.Api.Repositories
         {
             return await _context.Employees.ToListAsync();
         }
-        public bool PostEmployees(Employee emp)
-        {
-            _context.Employees.Add(emp);
-            var contextSaveStatus = _context.SaveChanges();
-            // contextSaveStatus;
-            return contextSaveStatus > 0;
 
-        }
-        public Employee? GetEmployeeById(int id)
+        public async Task<bool> PostEmployees(Employee emp)
         {
-            return _context.Employees.Find(id);
+            await _context.Employees.AddAsync(emp); // Add the new employee to the DbSet (we can use add or addAsync methods as add doesn't need to be awaited but addAsync is an async method and needs to be awaited)
+
+            var result = await _context.SaveChangesAsync();
+
+            return result > 0;
         }
-        public bool updateEmployeesData(Employee employee)
+
+        public async Task<Employee?> GetEmployeeById(int id)
         {
-            var existingEmployee = _context.Employees.Find(employee.Id);
+            return await _context.Employees.FindAsync(id);
+        }
+
+        public async Task<bool> UpdateEmployeesData(Employee employee)
+        {
+            var existingEmployee =
+                await _context.Employees.FindAsync(employee.Id);
 
             if (existingEmployee == null)
             {
@@ -42,9 +46,9 @@ namespace HRMS.Api.Repositories
             existingEmployee.Name = employee.Name;
             existingEmployee.Role = employee.Role;
 
-            return _context.SaveChanges() > 0;
+            var result = await _context.SaveChangesAsync();
 
-
+            return result > 0;
         }
     }
 }

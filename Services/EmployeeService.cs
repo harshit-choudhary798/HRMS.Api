@@ -15,19 +15,21 @@ namespace HRMS.Api.Services
         public async Task<List<Employee>> GetEmployees()
         {
             return await _repository.GetEmployees();
+        }
 
-        }
-        public bool PostEmployees(Employee emp)
+        public async Task<bool> PostEmployees(Employee emp)
         {
-            return _repository.PostEmployees(emp);
+            return await _repository.PostEmployees(emp);
         }
-        public Employee? GetEmployeeById(int id)
+
+        public async Task<Employee?> GetEmployeeById(int id)
         {
-            return _repository.GetEmployeeById(id);
+            return await _repository.GetEmployeeById(id);
         }
-        public bool updateEmployeesData(Employee employee)
+
+        public async Task<bool> UpdateEmployeesData(Employee employee)
         {
-            return _repository.updateEmployeesData(employee);
+            return await _repository.UpdateEmployeesData(employee);
         }
     }
 }
