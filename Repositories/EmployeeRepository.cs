@@ -20,15 +20,29 @@ namespace HRMS.Api.Repositories
         public bool PostEmployees(Employee emp)
         {
             _context.Employees.Add(emp);
-            var contextSaveStatus= _context.SaveChanges();
-           // contextSaveStatus;
-            return contextSaveStatus > 0 ;
-            
+            var contextSaveStatus = _context.SaveChanges();
+            // contextSaveStatus;
+            return contextSaveStatus > 0;
+
         }
         public Employee? GetEmployeeById(int id)
         {
-            var didFind = _context.Employees.Find(id);
-            return didFind;
+            return _context.Employees.Find(id);
+        }
+        public bool updateEmployeesData(Employee employee)
+        {
+            var existingEmployee = _context.Employees.Find(employee.Id);
+
+            if (existingEmployee == null)
+            {
+                return false;
+            }
+
+            existingEmployee.Name = employee.Name;
+            existingEmployee.Role = employee.Role;
+
+            return _context.SaveChanges() > 0;
+
 
         }
     }

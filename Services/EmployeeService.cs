@@ -24,5 +24,9 @@ namespace HRMS.Api.Services
         {
             return _repository.GetEmployeeById(id);
         }
+        public bool updateEmployeesData(Employee employee)
+        {
+            return _repository.updateEmployeesData(employee);
+        }
     }
 }
